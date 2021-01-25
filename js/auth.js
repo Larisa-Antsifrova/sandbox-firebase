@@ -12,7 +12,7 @@ signupForm.addEventListener("submit", (e) => {
   // sign up a user
   auth.createUserWithEmailAndPassword(email, password).then((cred) => {
     // information about the newly signed up user
-    console.log(cred.user);
+    console.log("user cred on sign up", cred.user);
 
     // close the signup modal & reset form
     const modal = document.querySelector("#modal-signup");
@@ -27,5 +27,26 @@ logout.addEventListener("click", (e) => {
   e.preventDefault();
   auth.signOut().then(() => {
     console.log("user signed out");
+  });
+});
+
+// login a user
+const loginForm = document.querySelector("#login-form");
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // get user info
+  const email = loginForm["login-email"].value;
+  const password = loginForm["login-password"].value;
+
+  // log the user in
+  auth.signInWithEmailAndPassword(email, password).then((cred) => {
+    // information about the logged in user
+    console.log("user cred on log in", cred.user);
+
+    // close the signup modal & reset form
+    const modal = document.querySelector("#modal-login");
+    M.Modal.getInstance(modal).close();
+    loginForm.reset();
   });
 });
