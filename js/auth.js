@@ -9,7 +9,7 @@ signupForm.addEventListener("submit", (e) => {
   const password = signupForm["signup-password"].value;
   console.log("password: ", password);
 
-  // sign up the user
+  // sign up a user
   auth.createUserWithEmailAndPassword(email, password).then((cred) => {
     // information about the newly signed up user
     console.log(cred.user);
@@ -18,5 +18,14 @@ signupForm.addEventListener("submit", (e) => {
     const modal = document.querySelector("#modal-signup");
     M.Modal.getInstance(modal).close();
     signupForm.reset();
+  });
+});
+
+// logout a user
+const logout = document.querySelector("#logout");
+logout.addEventListener("click", (e) => {
+  e.preventDefault();
+  auth.signOut().then(() => {
+    console.log("user signed out");
   });
 });
