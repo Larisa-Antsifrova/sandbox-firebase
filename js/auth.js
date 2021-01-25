@@ -5,13 +5,13 @@ auth.onAuthStateChanged((user) => {
     // getting collection of guides from firestore
     db.collection("guides")
       .get()
-      .then((snapshot) => {
-        setupUI(user);
-        setupGuides(snapshot.docs);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      .then(
+        (snapshot) => {
+          setupUI(user);
+          setupGuides(snapshot.docs);
+        },
+        (err) => console.log(err)
+      );
   } else {
     console.log("user logged out");
     setupUI();
@@ -31,12 +31,19 @@ signupForm.addEventListener("submit", (e) => {
   console.log("password: ", password);
 
   // sign up a user
-  auth.createUserWithEmailAndPassword(email, password).then((cred) => {
-    // close the signup modal & reset form
-    const modal = document.querySelector("#modal-signup");
-    M.Modal.getInstance(modal).close();
-    signupForm.reset();
-  });
+  auth
+    .createUserWithEmailAndPassword(email, password)
+    .then((cred) => {
+      return db.collection("users").doc(cred.user.uid).set({
+        bio: signupForm["signup-bio"].value,
+      });
+    })
+    .then(() => {
+      // close the signup modal & reset form
+      const modal = document.querySelector("#modal-signup");
+      M.Modal.getInstance(modal).close();
+      signupForm.reset();
+    });
 });
 
 // logout a user
