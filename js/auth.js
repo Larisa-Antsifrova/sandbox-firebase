@@ -21,6 +21,7 @@ auth.onAuthStateChanged((user) => {
 
 // signup
 const signupForm = document.querySelector("#signup-form");
+
 signupForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -36,6 +37,10 @@ signupForm.addEventListener("submit", (e) => {
     .then((cred) => {
       return db.collection("users").doc(cred.user.uid).set({
         bio: signupForm["signup-bio"].value,
+        number: null,
+        favorite: [],
+        watched: [],
+        queue: [],
       });
     })
     .then(() => {
@@ -48,6 +53,7 @@ signupForm.addEventListener("submit", (e) => {
 
 // logout a user
 const logout = document.querySelector("#logout");
+
 logout.addEventListener("click", (e) => {
   e.preventDefault();
   auth.signOut();
