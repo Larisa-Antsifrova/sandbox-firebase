@@ -13,7 +13,9 @@ const setupUI = (user) => {
       .get()
       .then((doc) => {
         const html = `
-        <div>Logged in as ${user.email}</div>
+        <div>Logged in as ${user.displayName}</div>
+        <div>Your e-mail is ${user.email}</div>
+        <div>${doc.data().number}</div>
         <div>${doc.data().bio}</div>
       `;
         accountDetails.innerHTML = html;

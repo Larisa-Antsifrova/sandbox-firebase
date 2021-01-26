@@ -37,6 +37,14 @@
             >
           </li>
           <li class="logged-in" style="display: none">
+            <a
+              href="#"
+              class="grey-text modal-trigger"
+              data-target="modal-update-account"
+              >Update account</a
+            >
+          </li>
+          <li class="logged-in" style="display: none">
             <a href="#" class="grey-text" id="logout">Logout</a>
           </li>
           <li class="logged-in" style="display: none">
@@ -66,6 +74,37 @@
         </ul>
       </div>
     </nav>
+
+    <!-- UPDATE ACCOUNT INFO MODAL -->
+    <div id="modal-update-account" class="modal">
+      <div class="modal-content">
+        <h4>Update info</h4>
+        <br />
+        <form id="update-form">
+          <div class="input-field">
+            <input type="text" id="update-display-name" />
+            <label for="update-display-name">Name to display</label>
+          </div>
+          <div class="input-field">
+            <input type="email" id="update-email" />
+            <label for="update-email">Email address</label>
+          </div>
+          <!-- <div class="input-field">
+            <input type="password" id="update-password" />
+            <label for="update-password">Choose password</label>
+          </div> -->
+          <div class="input-field">
+            <input type="text" id="update-bio" />
+            <label for="update-bio">One Line Bio</label>
+          </div>
+          <div class="input-field">
+            <input type="number" id="update-number" />
+            <label for="update-number">Your phone number</label>
+          </div>
+          <button class="btn yellow darken-2 z-depth-0">Update</button>
+        </form>
+      </div>
+    </div>
 
     <!-- SIGN UP MODAL -->
     <div id="modal-signup" class="modal">

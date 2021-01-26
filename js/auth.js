@@ -55,6 +55,7 @@ logout.addEventListener("click", (e) => {
 
 // login a user
 const loginForm = document.querySelector("#login-form");
+
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -69,4 +70,67 @@ loginForm.addEventListener("submit", (e) => {
     M.Modal.getInstance(modal).close();
     loginForm.reset();
   });
+});
+
+// update the user info
+const updateForm = document.querySelector("#update-form");
+
+updateForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const user = firebase.auth().currentUser;
+  //get user update info
+  const newDisplayName = updateForm["update-display-name"].value;
+  const newEmail = updateForm["update-email"].value;
+  const newBio = updateForm["update-bio"].value;
+  const newNumber = updateForm["update-number"].value;
+
+  if (newDisplayName) {
+    user
+      .updateProfile({
+        displayName: newDisplayName,
+      })
+      .then(function () {
+        console.log("Display name updated");
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
+  }
+
+  if (newEmail) {
+    user
+      .updateEmail(newEmail)
+      .then(function () {
+        setupUI(user);
+        console.log("Email updated");
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
+  }
+
+  if (newBio) {
+    db.collection("users").doc(user.uid).set(
+      {
+        bio: newBio,
+      },
+      { merge: true }
+    );
+  }
+  if (newNumber) {
+    db.collection("users").doc(user.uid).set(
+      {
+        number: newNumber,
+      },
+      { merge: true }
+    );
+  }
+
+  setupUI(user);
+
+  // close the signup modal & reset form
+  const modal = document.querySelector("#modal-update-account");
+  M.Modal.getInstance(modal).close();
+  updateForm.reset();
 });
