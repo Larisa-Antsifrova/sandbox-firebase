@@ -1,4 +1,5 @@
 const cafeList = document.querySelector("#cafe-list");
+const addForm = document.querySelector("#add-cafe-form");
 
 //creating one li element for each cafe
 function renderCafe(doc) {
@@ -15,8 +16,21 @@ function renderCafe(doc) {
 
   cafeList.appendChild(li);
 }
+
+//getting data from db
 db.collection("cafes")
   .get()
   .then((snapshot) => {
     snapshot.docs.forEach((doc) => renderCafe(doc));
   });
+
+// saving data to db
+addForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  db.collection("cafes").add({
+    name: addForm.name.value,
+    city: addForm.city.value,
+  });
+  addForm.reset();
+});
