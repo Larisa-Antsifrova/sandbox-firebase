@@ -6,7 +6,13 @@
 - User account info update.
 - Firestore new document creation with the user ID.
 
-### Resources
+## firebase-firestore
+
+- Basic collections in firestore DB.
+- Document creation, reading, and updating.
+- Real time changes rendering.
+
+#### Resources
 
 - The Net Ninja
 - Firebase documentation
