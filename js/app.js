@@ -28,13 +28,6 @@ function renderCafe(doc) {
   });
 }
 
-//getting data from db - static
-// db.collection("cafes")
-//   .get()
-//   .then((snapshot) => {
-//     snapshot.docs.forEach((doc) => renderCafe(doc));
-//   });
-
 // saving data to db
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -45,6 +38,26 @@ addForm.addEventListener("submit", (e) => {
   });
   addForm.reset();
 });
+
+// real time listener
+db.collection("cafes").onSnapshot((snapshot) => {
+  let changes = snapshot.docChanges();
+  changes.forEach((change) => {
+    if (change.type === "added") {
+      renderCafe(change.doc);
+    } else if (change.type === "removed") {
+      let li = document.querySelector(`[data-id="${change.doc.id}"`);
+      cafeList.removeChild(li);
+    }
+  });
+});
+
+//getting data from db - static
+// db.collection("cafes")
+//   .get()
+//   .then((snapshot) => {
+//     snapshot.docs.forEach((doc) => renderCafe(doc));
+//   });
 
 // filtering data
 // db.collection("cafes")
@@ -63,15 +76,11 @@ addForm.addEventListener("submit", (e) => {
 //     snapshot.docs.forEach((doc) => renderCafe(doc));
 //   });
 
-// real time listener
-db.collection("cafes").onSnapshot((snapshot) => {
-  let changes = snapshot.docChanges();
-  changes.forEach((change) => {
-    if (change.type === "added") {
-      renderCafe(change.doc);
-    } else if (change.type === "removed") {
-      let li = document.querySelector(`[data-id="${change.doc.id}"`);
-      cafeList.removeChild(li);
-    }
-  });
-});
+// updating data in db
+// db.collection("cafes")
+//   .doc("N1OaBzccAQxH8IyP7wdh")
+//   .update({ name: "Outer Rim" });
+
+// db.collection("cafes")
+//   .doc("N1OaBzccAQxH8IyP7wdh")
+//   .set({ name: "Jen's Home", city: "Chicago" });
