@@ -28,12 +28,12 @@ function renderCafe(doc) {
   });
 }
 
-//getting data from db
-db.collection("cafes")
-  .get()
-  .then((snapshot) => {
-    snapshot.docs.forEach((doc) => renderCafe(doc));
-  });
+//getting data from db - static
+// db.collection("cafes")
+//   .get()
+//   .then((snapshot) => {
+//     snapshot.docs.forEach((doc) => renderCafe(doc));
+//   });
 
 // saving data to db
 addForm.addEventListener("submit", (e) => {
@@ -62,3 +62,16 @@ addForm.addEventListener("submit", (e) => {
 //   .then((snapshot) => {
 //     snapshot.docs.forEach((doc) => renderCafe(doc));
 //   });
+
+// real time listener
+db.collection("cafes").onSnapshot((snapshot) => {
+  let changes = snapshot.docChanges();
+  changes.forEach((change) => {
+    if (change.type === "added") {
+      renderCafe(change.doc);
+    } else if (change.type === "removed") {
+      let li = document.querySelector(`[data-id="${change.doc.id}"`);
+      cafeList.removeChild(li);
+    }
+  });
+});
