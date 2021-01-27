@@ -45,3 +45,20 @@ addForm.addEventListener("submit", (e) => {
   });
   addForm.reset();
 });
+
+// filtering data
+// db.collection("cafes")
+//   .where("city", "==", "Kiev")
+//   .get()
+//   .then((snapshot) => {
+//     snapshot.docs.forEach((doc) => renderCafe(doc));
+//   });
+
+//ordering data and creating custom indices
+// db.collection("cafes")
+//   .where("city", "==", "Kiev")
+//   .orderBy("name")
+//   .get()
+//   .then((snapshot) => {
+//     snapshot.docs.forEach((doc) => renderCafe(doc));
+//   });
